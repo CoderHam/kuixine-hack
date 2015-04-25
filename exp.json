@@ -1,0 +1,6 @@
+{ "_id" : { "$oid" : "553ad2febe1fb741ee86ceda" }, "name" : "chicken biryani", "desc" : "spicy", "by" : "user101", "location" : "delhi", "price" : 120 }
+{ "_id" : { "$oid" : "553ad31abe1fb741ee86cedb" }, "name" : "chicken tikks", "desc" : "spicy red chicken", "by" : "user102", "location" : "kolkata", "price" : 120 }
+{ "_id" : { "$oid" : "553ad343be1fb741ee86cedc" }, "name" : "red pasta", "desc" : "italian pasta", "by" : "user102", "location" : "italia", "price" : 200 }
+{ "_id" : { "$oid" : "553b2019be1fb741ee86cedd" }, "name" : "andra biryani", "desc" : "spicy biryani", "by" : "user101", "location" : "kolkata", "price" : 120 }
+{ "_id" : { "$oid" : "553b3617be1fb741ee86cede" }, "name" : "red pasta", "desc" : "italian pasta", "by" : "user102", "location" : "italia", "price" : 200, "filter" : [ "italian", "sweet" ] }
+{ "_id" : { "$oid" : "553b63f47b721b5c1757af8c" }, "name" : "pasta", "location" : "sjt", "m_type" : "lunch", "by" : "pulkit", "price" : 150, "desc" : "yummy red pasta\r\n" }
