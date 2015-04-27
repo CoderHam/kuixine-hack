@@ -14,5 +14,5 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 app.use('/',mainRouter)
 
-app.listen(80);
-console.log('server listening on 80');
+app.listen(8888);
+console.log('server listening on 8888');

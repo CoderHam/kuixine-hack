@@ -6,11 +6,6 @@
       rel="stylesheet">
 <style>
 @charset "utf-8";
-/* CSS Document */
-
-/* ---------- FONTAWESOME ---------- */
-/* ---------- http://fortawesome.github.com/Font-Awesome/ ---------- */
-/* ---------- http://weloveiconfonts.com/ ---------- */
 
 @import url(http://weloveiconfonts.com/api/?family=fontawesome);
 
@@ -35,7 +30,6 @@ body {
     font: 87.5%/1.5em 'Open Sans', sans-serif;
     margin: 0;
 }
-
 a {
     text-decoration: none;
     font-size: 200%;
@@ -74,6 +68,16 @@ p, input {
     padding: 0.5em;
 }
 
+.predp
+    {
+        margin-top:0;
+        margin-bottom:0;
+        cursor : pointer ;
+    }
+.predp:hover
+    {
+        background-color:rgba(0,0,0,0.1);
+    }
 input:focus {
     outline: none;
 }
@@ -160,7 +164,7 @@ ul {
     padding: 10px;
     background: #ffffff;
     border-radius: 8px;
-    background-color: rgba(238,17,17,0.6);
+    background-color: rgba(255,255,255,0.6);
 }
 
 .toolbar input[type="search"]::-webkit-input-placeholder { color: #fff; }
@@ -172,6 +176,11 @@ ul {
   float: none;
   vertical-align: top;
 }
+    #preddiv
+    { 
+        width:100%;
+        background-color:white;
+    }
 
 .navbar .navbar-collapse {
   text-align: center;
@@ -188,60 +197,20 @@ ul {
         <form action="javascript:void(0);" method="get">
             
             <div class="col-xs-12 col-md-12" style="text-align:center">
-            <form class="navbar-form" role="search">
+            <form class="navbar-form" role="search" >
                 <div class="input-group">
-                    <input type="text" class="form-control"  placeholder="What are you hungry for?" id = "sinput">
+                    <input type="text" autocomplete="off" class="form-control"  placeholder="What are you hungry for?" id = "sinput" onkeyup = "PredFetch()">
                     <div class="input-group-btn">
-                        <button class="btn btn-default" onclick="clk()"><i class="glyphicon glyphicon-search"></i></button>
+                        <button class="btn btn-default" onclick="clk()"><i class="glyphicon glyphicon-search"></i></button>             
                     </div>
+                    
                 </div>
+                <div id = "preddiv"></div>
             </form>
         </div>
 
         </form>
      <div id = "x">
-    <!--<div class="col-xs-6 col-md-4" style="text-align:center">
-    
-         <div class="box">
-           
-                
-                     <p style="font-weight: bold;">Aunty's Homemade Cupcakes<p>
-                     <p>Delicious comfort food for all ages!</p>
-                     <p>51/C Block D New Alipore, Kolkata</p>
-                     <p>7:00pm</p>
-                
-                <button class="btn" type="submit" style="background-color:rgba(256,256,256,0.30);font-weight: bold">Order</button>
-            
-         </div>
-    </div>
-    <div class="col-xs-6 col-md-4" style="text-align:center">
-    
-         <div class="box">
-           
-                
-                     <p style="font-weight: bold;">Aunty's Homemade Cupcakes<p>
-                     <p>Delicious comfort food for all ages!</p>
-                     <p>51/C Block D New Alipore, Kolkata</p>
-                     <p>7:00pm</p>
-                
-                <button class="btn" type="submit" style="background-color:rgba(256,256,256,0.30);font-weight: bold">Order</button>
-            
-         </div>
-    </div>
-    <div class="col-xs-6 col-md-4" style="text-align:center">
-    
-         <div class="box">
-           
-                
-                     <p style="font-weight: bold;">Aunty's Homemade Cupcakes<p>
-                     <p>Delicious comfort food for all ages!</p>
-                     <p>51/C Block D New Alipore, Kolkata</p>
-                     <p>7:00pm</p>
-                
-                <button class="btn" type="submit" style="background-color:rgba(256,256,256,0.30);font-weight: bold">Order</button>
-            
-         </div>
-    </div>-->
      </div>
 </div>
 
@@ -250,6 +219,7 @@ ul {
     <script src="js/jquery.min.js"></script>
 	<script type = "text/javascript">
 	var client = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest() ;
 	var data ;
 	  client.onreadystatechange = function()
       {
@@ -259,16 +229,40 @@ ul {
 		 parse();
 		 }
 	 }
+      function addclk(x)
+        {
+             var length = x.childNodes.length ;
+            for( var i = 0 ; i < length ; i++)
+            {
+                x.childNodes[i].onclick = function()
+                {
+                    var str = this.innerHTML ;
+                    document.getElementById('sinput').value = str ; 
+                    x.innerHTML = "" ;
+                    clk();
+                }
+            }
+        }
+    xhr.onreadystatechange = function()
+        {
+              if(xhr.readyState == 4 && xhr.status==200)
+               {
+                    var x = document.getElementById("preddiv");
+                    x.innerHTML=xhr.responseText ;     
+                    addclk(x);
+               }
+        }
     function clk()
         {
             
             var str = document.getElementById('sinput').value;
             document.getElementById("x").innerHTML = "" ;
-            client.open('GET','http://localhost/search?s='+str);
+            client.open('GET','http://localhost:8888/search?s='+str);
             client.send();            
         }
         function parse()
         {
+            document.getElementById("preddiv").innerHTML = "" ;
             data = JSON.parse(data);
             for( var i =0 ; i<data.length;i++)
                {
@@ -285,6 +279,12 @@ ul {
                     document.getElementById("x").appendChild(tdiv);
                    
                }
+        }
+        function PredFetch()
+        {
+            var str = document.getElementById('sinput').value;
+            xhr.open('GET',"http://localhost:8888/pred?s="+str);
+            xhr.send();
         }
 	</script>
     
